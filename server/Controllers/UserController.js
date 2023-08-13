@@ -32,16 +32,17 @@ router.post('/login', (req, res) => {
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                return res.status(404).json({token :'User not found'});
+                return res.status(404).json({ token: 'User not found' });
             }
             if (user.password !== password) {
-                return res.status(401).json({token:'Incorrect password'});
+                return res.status(401).json({ token: 'Incorrect password' });
             }
             // At this point, user is authenticated
-            res.json({token: user._id});
+            res.json({ token: user._id });
         })
-        .catch(err => res.status(500).json('Error: ' + err));
+        .catch(err => res.status(500).json({ token: 'Error: ' + err }));
 });
+
 
 
 
