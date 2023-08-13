@@ -24,6 +24,7 @@ router.post('/add', (req, res) => {
         .then(() => res.json('User added!'))
         .catch((err) => res.status(400).json('Error: ' + err));
 });
+
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -40,4 +41,7 @@ router.post('/login', (req, res) => {
         })
         .catch(err => res.status(500).json('Error: ' + err));
 });
+
+
+
 module.exports = router;
