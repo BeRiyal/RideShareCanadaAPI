@@ -3,6 +3,7 @@ const express = require('express');
 // routes for making http requests
 const router = express.Router();
 const User = require('../Models/UsersModel');
+const ApiResponse = require('../Models/ApiResponse');   
 
 router.get('/', (req, res) => {
     User.find()
@@ -26,6 +27,25 @@ router.post('/add', (req, res) => {
         .catch((err) => res.status(400).json('Error: ' + err));
 });
 
+// router.post('/login', (req, res) => {
+//     console.log(req.body);
+//     const { email, password } = req.body;
+
+//     User.findOne({ email: email })
+//         .then(user => {
+//             if (!user) {
+//                 return res.status(404).json({ token: 'User not found' });
+//             }
+//             if (user.password !== password) {
+//                 return res.status(401).json({ token: 'Incorrect password' });
+//             }
+//             // At this point, user is authenticated
+//             res.json({ token: user._id });
+//         })
+//         .catch(err => res.status(500).json({ token: 'Error: ' + err }));
+// });
+
+
 router.post('/login', (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
@@ -33,16 +53,24 @@ router.post('/login', (req, res) => {
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                return res.status(404).json({ token: 'User not found' });
+                const response = new ApiResponse(false, null, 'User not found');
+                return res.status(404).json(response);
             }
             if (user.password !== password) {
-                return res.status(401).json({ token: 'Incorrect password' });
+                const response = new ApiResponse(false, null, 'Incorrect password');
+                return res.status(401).json(response);
             }
             // At this point, user is authenticated
-            res.json({ token: user._id });
+            const response = new ApiResponse(true, { token: user._id }, 'Login successful');
+            res.json(response);
         })
-        .catch(err => res.status(500).json({ token: 'Error: ' + err }));
+        .catch(err => {
+            const response = new ApiResponse(false, null, 'Error: ' + err);
+            res.status(500).json(response);
+        });
 });
+
+
 
 router.put('/update/:id', (req, res) => {
     const userId = req.params.id;
@@ -66,7 +94,6 @@ router.put('/update/:id', (req, res) => {
         })
         .catch(err => res.status(500).json({ token: 'Error: ' + err }));
 });
-
 
 // Delete user by ID
 router.delete('/delete/:id', (req, res) => {
