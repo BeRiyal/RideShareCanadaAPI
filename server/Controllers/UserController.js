@@ -26,9 +26,9 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    User.findOne({ username: username })
+    User.findOne({ email: email })
         .then(user => {
             if (!user) {
                 return res.status(404).json('User not found');
