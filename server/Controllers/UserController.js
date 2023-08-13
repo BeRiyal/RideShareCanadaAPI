@@ -38,7 +38,7 @@ router.post('/login', (req, res) => {
                 return res.status(401).json('Incorrect password');
             }
             // At this point, user is authenticated
-            res.json({_id: user._id});
+            res.json({token: user._id});
         })
         .catch(err => res.status(500).json('Error: ' + err));
 });
