@@ -12,7 +12,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use("/api/users", userRoutes);
 
-
 const port = process.env.PORT || 3000;
 connectDB()
     .then(() => {
