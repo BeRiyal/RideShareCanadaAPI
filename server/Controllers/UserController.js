@@ -26,6 +26,7 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+    console.log(req.body);
     const { email, password } = req.body;
 
     User.findOne({ email: email })
@@ -37,7 +38,7 @@ router.post('/login', (req, res) => {
                 return res.status(401).json('Incorrect password');
             }
             // At this point, user is authenticated
-            res.json('Login successful');
+            res.json(user);
         })
         .catch(err => res.status(500).json('Error: ' + err));
 });
