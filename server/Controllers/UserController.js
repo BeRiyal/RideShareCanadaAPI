@@ -44,7 +44,43 @@ router.post('/login', (req, res) => {
         .catch(err => res.status(500).json({ token: 'Error: ' + err }));
 });
 
+router.put('/update/:id', (req, res) => {
+    const userId = req.params.id;
+    const updateData = {
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip
+    };
 
+    User.findByIdAndUpdate(userId, updateData, { new: true })
+        .then(updatedUser => {
+            if (!updatedUser) {
+                return res.status(404).json({ token: 'User not found' });
+            }
+            res.json({ token: updatedUser._id });
+        })
+        .catch(err => res.status(500).json({ token: 'Error: ' + err }));
+});
+
+
+// Delete user by ID
+router.delete('/delete/:id', (req, res) => {
+    const userId = req.params.id;
+
+    User.findByIdAndDelete(userId)
+        .then(deletedUser => {
+            if (!deletedUser) {
+                return res.status(404).json({ token: 'User not found' });
+            }
+            res.json({ token: deletedUser._id });
+        })
+        .catch(err => res.status(500).json({ token: 'Error: ' + err }));
+});
 
 
 module.exports = router;
