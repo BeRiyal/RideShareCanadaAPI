@@ -6,17 +6,58 @@ const User = require('../Models/UsersModel');
 const ApiResponse = require('../Models/ApiResponse');   
 
 
-router.get('/', (req, res) => {
-    User.find()
-        .then(data => {
-            const response = new ApiResponse(true, data, 'Data retrieved successfully');
-            res.json(response);
+// router.get('/', (req, res) => {
+//     User.find()
+//         .then(data => {
+//             const response = new ApiResponse(true, data, 'Data retrieved successfully');
+//             res.json(response);
+//         })
+//         .catch(err => {
+//             const response = new ApiResponse(false, null, 'Error: ' + err);
+//             res.status(500).json(response);
+//         });
+// });
+
+
+router.post('/add', (req, res) => {
+    const { username, password, email, phone, address, city, state, zip } = req.body;
+
+    // Check if the email already exists
+    User.findOne({ email: email })
+        .then(existingUser => {
+            if (existingUser) {
+                const response = new ApiResponse(false, null, 'Email is already registered');
+                return res.status(400).json(response);
+            }
+
+            // If email is not registered, create a new user
+            const newUser = new User({
+                username: username,
+                password: password,
+                email: email,
+                phone: phone,
+                address: address,
+                city: city,
+                state: state,
+                zip: zip
+            });
+
+            newUser.save()
+                .then(() => {
+                    const response = new ApiResponse(true, null, 'User added successfully');
+                    res.json(response);
+                })
+                .catch(err => {
+                    const response = new ApiResponse(false, null, 'Error: ' + err);
+                    res.status(400).json(response);
+                });
         })
         .catch(err => {
             const response = new ApiResponse(false, null, 'Error: ' + err);
             res.status(500).json(response);
         });
 });
+
 
 router.post('/add', (req, res) => {
     const newUser = new User({
@@ -115,7 +156,7 @@ router.delete('/delete/:id', (req, res) => {
             const response = new ApiResponse(false, null, 'Error: ' + err);
             res.status(500).json(response);
         });
-        
+
 });
 
 
