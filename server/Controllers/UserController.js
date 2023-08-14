@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
         });
 });
 
-
 router.post('/add', (req, res) => {
     const { username, password, email, phone, address, city, state, zip } = req.body;
 
@@ -107,8 +106,6 @@ router.post('/login', (req, res) => {
             res.status(500).json(response);
         });
 });
-
-
 
 router.put('/update/:id', (req, res) => {
     const userId = req.params.id;
