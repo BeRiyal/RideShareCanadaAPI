@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
-// Car Model
 
 const carSchema = new mongoose.Schema({
-    model: String,
     make: String,
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    model: String,
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // Assuming 'User' is your User model
 });
 
 const Car = mongoose.model('Car', carSchema);
 
-module.exports = {
-    Car
-};
+module.exports = Car;

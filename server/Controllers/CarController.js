@@ -5,7 +5,7 @@ const Car = require('../Models/CarModel');
 const ApiResponse = require('../Models/ApiResponse');
 
 // Create a new car
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const carData = req.body;
         console.log('Received car data:', carData); // Log the received data for debugging

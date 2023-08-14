@@ -18,6 +18,7 @@ const port = process.env.PORT || 5085;
 connectDB()
     .then(() => {
         console.log('MongoDB connected')
-        app.listen(process.env.PORT, () => console.log('Server running on port 3000'));
+     //   app.listen(process.env.PORT, () => console.log(process.env.PORT));
+        app.listen(port, () => console.log('Server running on port 3000'));
     })
     .catch((err) => console.log(err));
