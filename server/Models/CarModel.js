@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 // Car Model
+
 const carSchema = new mongoose.Schema({
     model: String,
     make: String,

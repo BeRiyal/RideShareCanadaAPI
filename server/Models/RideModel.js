@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 // Ride Model
 const rideSchema = new mongoose.Schema({
     from: String,
