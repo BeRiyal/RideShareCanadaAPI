@@ -5,7 +5,7 @@ const Car = require('../Models/CarModel');
 const ApiResponse = require('../Models/ApiResponse');
 
 // Create a new car
-router.post('/', async (req, res) => {
+router.post('/add', async (req, res) => {
     try {
         const carData = req.body;
         const newCar = await Car.create(carData);
@@ -16,9 +16,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all cars
-
-
-router.get('/', (req, res) => {
+router.get('/getAllCars', (req, res) => {
     Car.find()
         .then(data => {
             const response = new ApiResponse(true, data, 'Data retrieved successfully');
