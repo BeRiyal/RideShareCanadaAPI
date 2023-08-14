@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// Ride Model
+
 const rideSchema = new mongoose.Schema({
     from: String,
     to: String,
@@ -12,10 +12,8 @@ const rideSchema = new mongoose.Schema({
 
 const Ride = mongoose.model('Ride', rideSchema);
 
+module.exports = Ride;
 
-module.exports = {
-    Ride
-};
 
 
 
