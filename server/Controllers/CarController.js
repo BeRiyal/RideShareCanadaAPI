@@ -8,12 +8,19 @@ const ApiResponse = require('../Models/ApiResponse');
 router.post('/add', async (req, res) => {
     try {
         const carData = req.body;
+        console.log('Received car data:', carData); // Log the received data for debugging
+
         const newCar = await Car.create(carData);
+        console.log('New car created:', newCar); // Log the newly created car for debugging
+
         res.status(201).json(new ApiResponse(true, 'Car created successfully', newCar));
     } catch (error) {
+        console.error('Error creating car:', error); // Log the error for debugging
         res.status(500).json(new ApiResponse(false, 'Error creating car', null, error.message));
     }
 });
+
+
 
 // Get all cars
 router.get('/', (req, res) => {
