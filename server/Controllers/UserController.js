@@ -5,11 +5,6 @@ const router = express.Router();
 const User = require('../Models/UsersModel');
 const ApiResponse = require('../Models/ApiResponse');   
 
-// router.get('/', (req, res) => {
-//     User.find()
-//         .then((data) => res.send(data))
-//         .catch((err) => res.status(400).json('Error: ' + err));
-// });
 
 router.get('/', (req, res) => {
     User.find()
@@ -34,9 +29,17 @@ router.post('/add', (req, res) => {
         state: req.body.state,
         zip: req.body.zip
     });
+    
     newUser.save()
-        .then(() => res.json('User added!'))
-        .catch((err) => res.status(400).json('Error: ' + err));
+    .then(() => {
+        const response = new ApiResponse(true, null, 'User added successfully');
+        res.json(response);
+    })
+    .catch(err => {
+        const response = new ApiResponse(false, null, 'Error: ' + err);
+        res.status(400).json(response);
+    });
+
 });
 
 
@@ -82,11 +85,17 @@ router.put('/update/:id', (req, res) => {
     User.findByIdAndUpdate(userId, updateData, { new: true })
         .then(updatedUser => {
             if (!updatedUser) {
-                return res.status(404).json({ token: 'User not found' });
+                const response = new ApiResponse(false, null, 'User not found');
+                return res.status(404).json(response);
             }
-            res.json({ token: updatedUser._id });
+            const response = new ApiResponse(true, { token: updatedUser._id }, 'User updated successfully');
+            res.json(response);
         })
-        .catch(err => res.status(500).json({ token: 'Error: ' + err }));
+        .catch(err => {
+            const response = new ApiResponse(false, null, 'Error: ' + err);
+            res.status(500).json(response);
+        });
+
 });
 
 // Delete user by ID
@@ -96,11 +105,17 @@ router.delete('/delete/:id', (req, res) => {
     User.findByIdAndDelete(userId)
         .then(deletedUser => {
             if (!deletedUser) {
-                return res.status(404).json({ token: 'User not found' });
+                const response = new ApiResponse(false, null, 'User not found');
+                return res.status(404).json(response);
             }
-            res.json({ token: deletedUser._id });
+            const response = new ApiResponse(true, { token: deletedUser._id }, 'User deleted successfully');
+            res.json(response);
         })
-        .catch(err => res.status(500).json({ token: 'Error: ' + err }));
+        .catch(err => {
+            const response = new ApiResponse(false, null, 'Error: ' + err);
+            res.status(500).json(response);
+        });
+        
 });
 
 
