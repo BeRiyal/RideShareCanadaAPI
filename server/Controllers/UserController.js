@@ -5,10 +5,22 @@ const router = express.Router();
 const User = require('../Models/UsersModel');
 const ApiResponse = require('../Models/ApiResponse');   
 
+// router.get('/', (req, res) => {
+//     User.find()
+//         .then((data) => res.send(data))
+//         .catch((err) => res.status(400).json('Error: ' + err));
+// });
+
 router.get('/', (req, res) => {
     User.find()
-        .then((data) => res.send(data))
-        .catch((err) => res.status(400).json('Error: ' + err));
+        .then(data => {
+            const response = new ApiResponse(true, data, 'Data retrieved successfully');
+            res.json(response);
+        })
+        .catch(err => {
+            const response = new ApiResponse(false, null, 'Error: ' + err);
+            res.status(500).json(response);
+        });
 });
 
 router.post('/add', (req, res) => {
@@ -26,24 +38,6 @@ router.post('/add', (req, res) => {
         .then(() => res.json('User added!'))
         .catch((err) => res.status(400).json('Error: ' + err));
 });
-
-// router.post('/login', (req, res) => {
-//     console.log(req.body);
-//     const { email, password } = req.body;
-
-//     User.findOne({ email: email })
-//         .then(user => {
-//             if (!user) {
-//                 return res.status(404).json({ token: 'User not found' });
-//             }
-//             if (user.password !== password) {
-//                 return res.status(401).json({ token: 'Incorrect password' });
-//             }
-//             // At this point, user is authenticated
-//             res.json({ token: user._id });
-//         })
-//         .catch(err => res.status(500).json({ token: 'Error: ' + err }));
-// });
 
 
 router.post('/login', (req, res) => {
