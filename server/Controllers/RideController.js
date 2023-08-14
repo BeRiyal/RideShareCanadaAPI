@@ -63,4 +63,27 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+
+// Search for rides based on 'from' and 'to' locations
+router.get('/search', async (req, res) => {
+    try {
+        const { from, to } = req.query;
+
+        if (!from || !to) {
+            return res.status(400).json(new ApiResponse(false, null, 'Both "from" and "to" locations are required.'));
+        }
+
+        const rides = await Ride.find({ from: from, to: to });
+
+        if (rides.length === 0) {
+            return res.json(new ApiResponse(true, [], 'No rides found for the given locations.'));
+        }
+
+        res.json(new ApiResponse(true, rides, 'Rides retrieved successfully'));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, null, error.message));
+    }
+});
+
+
 module.exports = router;
