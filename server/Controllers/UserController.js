@@ -58,29 +58,29 @@ router.post('/add', (req, res) => {
 });
 
 
-router.post('/add', (req, res) => {
-    const newUser = new User({
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip
-    });
+// router.post('/add', (req, res) => {
+//     const newUser = new User({
+//         username: req.body.username,
+//         password: req.body.password,
+//         email: req.body.email,
+//         phone: req.body.phone,
+//         address: req.body.address,
+//         city: req.body.city,
+//         state: req.body.state,
+//         zip: req.body.zip
+//     });
     
-    newUser.save()
-    .then(() => {
-        const response = new ApiResponse(true, null, 'User added successfully');
-        res.json(response);
-    })
-    .catch(err => {
-        const response = new ApiResponse(false, null, 'Error: ' + err);
-        res.status(400).json(response);
-    });
+//     newUser.save()
+//     .then(() => {
+//         const response = new ApiResponse(true, null, 'User added successfully');
+//         res.json(response);
+//     })
+//     .catch(err => {
+//         const response = new ApiResponse(false, null, 'Error: ' + err);
+//         res.status(400).json(response);
+//     });
 
-});
+// });
 
 
 router.post('/login', (req, res) => {
