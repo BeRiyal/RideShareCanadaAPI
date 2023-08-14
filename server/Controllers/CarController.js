@@ -16,7 +16,7 @@ router.post('/add', async (req, res) => {
 });
 
 // Get all cars
-router.get('/getAllCars', (req, res) => {
+router.get('/', (req, res) => {
     Car.find()
         .then(data => {
             const response = new ApiResponse(true, data, 'Data retrieved successfully');

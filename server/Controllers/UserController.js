@@ -6,7 +6,7 @@ const User = require('../Models/UsersModel');
 const ApiResponse = require('../Models/ApiResponse');   
 
 
-router.get('/getAllUsers', (req, res) => {
+router.get('/', (req, res) => {
     User.find()
         .then(data => {
             const response = new ApiResponse(true, data, 'Data retrieved successfully');
