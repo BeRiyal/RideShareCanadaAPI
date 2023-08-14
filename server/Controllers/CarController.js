@@ -1,0 +1,71 @@
+// routes for making http requests
+const express = require('express');
+const router = express.Router();
+const Car = require('../Models/CarModel');
+const ApiResponse = require('../Models/ApiResponse');
+
+// Create a new car
+router.post('/', async (req, res) => {
+    try {
+        const carData = req.body;
+        const newCar = await Car.create(carData);
+        res.status(201).json(new ApiResponse(true, 'Car created successfully', newCar));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, 'Error creating car', null, error.message));
+    }
+});
+
+// Get all cars
+router.get('/', async (req, res) => {
+    try {
+        const cars = await Car.find();
+        res.json(new ApiResponse(true, 'Cars retrieved successfully', cars));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, 'Error retrieving cars', null, error.message));
+    }
+});
+
+// Get car by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const car = await Car.findById(req.params.id);
+        if (!car) {
+            return res.status(404).json(new ApiResponse(false, 'Car not found', null));
+        }
+        res.json(new ApiResponse(true, 'Car retrieved successfully', car));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, 'Error retrieving car', null, error.message));
+    }
+});
+
+// Update car by ID
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedCar) {
+            return res.status(404).json(new ApiResponse(false, 'Car not found', null));
+        }
+        res.json(new ApiResponse(true, 'Car updated successfully', updatedCar));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, 'Error updating car', null, error.message));
+    }
+});
+
+// Delete car by ID
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedCar = await Car.findByIdAndRemove(req.params.id);
+        if (!deletedCar) {
+            return res.status(404).json(new ApiResponse(false, 'Car not found', null));
+        }
+        res.json(new ApiResponse(true, 'Car deleted successfully', deletedCar));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, 'Error deleting car', null, error.message));
+    }
+});
+
+module.exports = router;
+
+
+
+module.exports = router;
