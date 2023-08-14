@@ -4,6 +4,7 @@ module.exports = mongoose.model('User', {
     username: {type: String, required: true},
     password: {type: String, required: true},
     email: {type:String, required: true},
+    status:{type:String,required:false},
     phone: {type: String, required: false},
     address: {type: String, required: false},
     city: {type:String, required: false},
