@@ -8,7 +8,7 @@ router.post('/add', async (req, res) => {
     try {
         const rideData = req.body;
         const newRide = await Ride.create(rideData);
-        res.status(201).json(new ApiResponse(true,  newRide,'Ride created successfully',));
+        res.status(201).json(new ApiResponse(true, newRide,'Ride created successfully',));
     } catch (error) {
         res.status(500).json(new ApiResponse(false, null, error.message));
     }
