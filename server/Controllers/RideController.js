@@ -24,6 +24,25 @@ router.get('/getall', async (req, res) => {
     }
 });
 
+
+// Get all rides that are available (i.e. rides that have not started yet)
+router.get('/available', async (req, res) => {
+    try {
+        const currentTime = new Date(); // Get the current time
+
+        const availableRides = await Ride.find({ startTime: { $gt: currentTime } });
+
+        if (availableRides.length === 0) {
+            return res.json(new ApiResponse(true, [], 'No available rides at the moment.'));
+        }
+
+        res.json(new ApiResponse(true, availableRides, 'Available rides retrieved successfully'));
+    } catch (error) {
+        res.status(500).json(new ApiResponse(false, null, error.message));
+    }
+});
+
+
 // Get ride by ID
 router.get('/getbyId/:id', async (req, res) => {
     try {
@@ -63,9 +82,6 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-
-
-
 // Search for rides based on 'from' and 'to' locations
 router.get('/search', async (req, res) => {
     try {
@@ -87,6 +103,7 @@ router.get('/search', async (req, res) => {
         res.status(500).json(new ApiResponse(false, null, error.message));
     }
 });
+
 
 
 
