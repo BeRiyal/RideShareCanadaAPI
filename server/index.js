@@ -14,7 +14,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/cars", carRoutes);
 
 //connect to database
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5085;
 connectDB()
     .then(() => {
         console.log('MongoDB connected')

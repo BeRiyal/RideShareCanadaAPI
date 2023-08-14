@@ -16,7 +16,7 @@ router.post('/add', async (req, res) => {
         res.status(201).json(new ApiResponse(true, 'Car created successfully', newCar));
     } catch (error) {
         console.error('Error creating car:', error); // Log the error for debugging
-        res.status(500).json(new ApiResponse(false, 'Error creating car', null, error.message));
+        res.status(500).json(new ApiResponse(false, 'Error creating car', error.message));
     }
 });
 
