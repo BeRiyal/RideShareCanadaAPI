@@ -15,7 +15,7 @@ router.post('/add', async (req, res) => {
 });
 
 // Get all rides
-router.get('/', async (req, res) => {
+router.get('/getall', async (req, res) => {
     try {
         const rides = await Ride.find();
         res.json(new ApiResponse(true,  rides,'Rides retrieved successfully'));
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get ride by ID
-router.get('/:id', async (req, res) => {
+router.get('/getbyId/:id', async (req, res) => {
     try {
         const ride = await Ride.findById(req.params.id);
         if (!ride) {
@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update ride by ID
-router.put('/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
     try {
         const updatedRide = await Ride.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedRide) {
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete ride by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         const deletedRide = await Ride.findByIdAndRemove(req.params.id);
         if (!deletedRide) {
@@ -64,10 +64,13 @@ router.delete('/:id', async (req, res) => {
 });
 
 
+
+
 // Search for rides based on 'from' and 'to' locations
 router.get('/search', async (req, res) => {
     try {
-        const { from, to } = req.query;
+        console.log(req.query);
+        const { from, to } = req.body;
 
         if (!from || !to) {
             return res.status(400).json(new ApiResponse(false, null, 'Both "from" and "to" locations are required.'));
@@ -84,6 +87,8 @@ router.get('/search', async (req, res) => {
         res.status(500).json(new ApiResponse(false, null, error.message));
     }
 });
+
+
 
 
 module.exports = router;
