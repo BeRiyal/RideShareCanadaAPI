@@ -16,13 +16,18 @@ router.post('/', async (req, res) => {
 });
 
 // Get all cars
-router.get('/', async (req, res) => {
-    try {
-        const cars = await Car.find();
-        res.json(new ApiResponse(true, 'Cars retrieved successfully', cars));
-    } catch (error) {
-        res.status(500).json(new ApiResponse(false, 'Error retrieving cars', null, error.message));
-    }
+
+
+router.get('/', (req, res) => {
+    Car.find()
+        .then(data => {
+            const response = new ApiResponse(true, data, 'Data retrieved successfully');
+            res.json(response);
+        })
+        .catch(err => {
+            const response = new ApiResponse(false, null, 'Error: ' + err);
+            res.status(500).json(response);
+        });
 });
 
 // Get car by ID

@@ -6,17 +6,17 @@ const User = require('../Models/UsersModel');
 const ApiResponse = require('../Models/ApiResponse');   
 
 
-// router.get('/', (req, res) => {
-//     User.find()
-//         .then(data => {
-//             const response = new ApiResponse(true, data, 'Data retrieved successfully');
-//             res.json(response);
-//         })
-//         .catch(err => {
-//             const response = new ApiResponse(false, null, 'Error: ' + err);
-//             res.status(500).json(response);
-//         });
-// });
+router.get('/', (req, res) => {
+    User.find()
+        .then(data => {
+            const response = new ApiResponse(true, data, 'Data retrieved successfully');
+            res.json(response);
+        })
+        .catch(err => {
+            const response = new ApiResponse(false, null, 'Error: ' + err);
+            res.status(500).json(response);
+        });
+});
 
 
 router.post('/add', (req, res) => {
