@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const rideSchema = new mongoose.Schema({
     from: String,
     to: String,
-    startTime: Date,
-    endTime: Date,
-    availableSeats: Number,
+    startTime: String,
+    date: String,
+    availableSeats: String,
+    dirverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     car: { type: mongoose.Schema.Types.ObjectId, ref: 'Car' },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
