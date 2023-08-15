@@ -83,7 +83,7 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Search for rides based on 'from' and 'to' locations
-router.get('/search', async (req, res) => {
+router.post('/search', async (req, res) => {
     try {
         console.log(req.query);
         const { from, to } = req.body;
