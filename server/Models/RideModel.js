@@ -6,7 +6,7 @@ const rideSchema = new mongoose.Schema({
     startTime: String,
     date: String,
     availableSeats: String,
-    dirverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    driverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     car: { type: mongoose.Schema.Types.ObjectId, ref: 'Car' },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
