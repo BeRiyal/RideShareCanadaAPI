@@ -20,10 +20,11 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
     const { username, password, email, phone, address, city, state, zip } = req.body;
-
-   email = email.toLowerCase();    // Convert email to lowercase   
+    console.log(email);
+    var lowerCaseEmail = email.toLowerCase();    // Convert email to lowercase
+    console.log(lowerCaseEmail);
     // Check if the email already exists
-    User.findOne({ email: email })
+    User.findOne({ email: lowerCaseEmail })
         .then(existingUser => {
             if (existingUser) {
                 const response = new ApiResponse(false, null, 'Email is already registered');
@@ -34,7 +35,7 @@ router.post('/add', (req, res) => {
             const newUser = new User({
                 username: username,
                 password: password,
-                email: email,
+                email: lowerCaseEmail,
                 phone: phone,
                 address: address,
                 city: city,
