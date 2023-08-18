@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
 router.post('/add', (req, res) => {
     const { username, password, email, phone, address, city, state, zip } = req.body;
 
+   email = email.toLowerCase();    // Convert email to lowercase   
     // Check if the email already exists
     User.findOne({ email: email })
         .then(existingUser => {
@@ -56,7 +57,6 @@ router.post('/add', (req, res) => {
             res.status(500).json(response);
         });
 });
-
 
 
 router.post('/login', (req, res) => {
